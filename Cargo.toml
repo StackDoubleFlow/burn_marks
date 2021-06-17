@@ -15,4 +15,4 @@ crate-type = ["cdylib"]
 
 [dependencies]
 quest_hook = { git = "https://github.com/StackDoubleFlow/quest-hook-rs" }
-tracing-android = { git = "https://github.com/raftario/tracing-android.git" }
+tracing-android = { git = "https://github.com/raftario/tracing-android" }
