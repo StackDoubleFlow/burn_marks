@@ -14,5 +14,10 @@ crate-type = ["cdylib"]
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-quest_hook = { git = "https://github.com/StackDoubleFlow/quest-hook-rs" }
-tracing-android = { git = "https://github.com/raftario/tracing-android" }
+anyhow = "1"
+# tracing-android = { git = "https://github.com/raftario/tracing-android" }
+tracing = { git = "https://github.com/tokio-rs/tracing" }
+
+[dependencies.quest_hook]
+path = "../../quest_hook_rs"
+features = ["unity2019"]

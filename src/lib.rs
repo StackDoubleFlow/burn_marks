@@ -1,26 +1,32 @@
+use anyhow::{anyhow, Context, Result};
 use quest_hook::hook;
 use quest_hook::libil2cpp::Il2CppObject;
-use tracing_android::tracing::{info};
+use tracing::info;
 
 #[no_mangle]
 pub extern "C" fn setup() {
-    quest_hook::setup();
+    quest_hook::setup("burn_marks");
 }
 
 #[hook("", "MainSettingsModelSO", "Load")]
-fn on_enable(this: &mut Il2CppObject, forced: bool) {
-    on_enable.original(this, forced);
+fn on_enable(this: &mut Il2CppObject, forced: bool) -> Result<()> {
+    on_enable.original(this, forced)?;
 
-    let field = this.class().find_field_unchecked("burnMarkTrailsEnabled").unwrap();
-    let val: &mut Il2CppObject = field.load(this);
-    let _: () = val.invoke("set_value", true).unwrap();
+    let burn_mark_trails_enabled = this
+        .load::<Il2CppObject>("burnMarkTrailsEnabled")
+        .context("Could not find field burnMarkTrailsEnabled")?;
+    burn_mark_trails_enabled
+        .invoke_void("set_value", true)
+        .map_err(|err| anyhow!(err.to_string()))?;
+
+    Ok(())
 }
 
 #[no_mangle]
 pub extern "C" fn load() {
-    info!("Installing RustTest2 hooks!");
+    info!("Installing burn_marks hooks!");
 
-    on_enable.install();
+    on_enable.install().unwrap();
 
-    info!("Installed RustTest2 hooks!");
+    info!("Installed burn_marks hooks!");
 }

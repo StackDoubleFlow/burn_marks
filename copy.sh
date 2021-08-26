@@ -2,7 +2,7 @@
 
 cargo ndk build
 
-adb push target/aarch64-linux-android/debug/libburn_marks.so /sdcard/Android/data/com.beatgames.beatsaber/files/mods/
+adb push target/aarch64-linux-android/debug/libburn_marks.so /sdcard/Android/data/com.beatgames.beatsaber/files/mods/libburn_marks.so
 adb shell am force-stop com.beatgames.beatsaber
 adb shell am start com.beatgames.beatsaber/com.unity3d.player.UnityPlayerActivity
 
